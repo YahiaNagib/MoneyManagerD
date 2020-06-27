@@ -1,0 +1,77 @@
+{% extends "home/base.html" %}
+{% block content %}
+    <div style="margin-bottom: 70px;">
+        <h1 class="mb-2 float-left">Categories</h1>
+        <button class="btn btn-outline-primary income_btn float-right ml-2">Income</button>
+        <button class="btn btn-outline-primary expense_btn float-right"
+            style="background-color: #007bff; color: #fff">Expenses</button>
+    </div>
+
+    <div class="content-section expense">
+        <table>
+            {% for category in expense_categories %}
+            <tr >
+                <td style="padding-bottom: 20px;">
+                    <li style="font-size: 25px;"> {{ category.name }} </li>
+                </td>
+                <td style="padding-bottom: 20px;">
+                    <a class="btn btn-danger ml-4" style="color: #fff;" href="{% url 'delete-category' category.id %}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="content-section income" style="display: none;">
+        <table>
+            {% for category in income_categories %}
+            <tr >
+                <td style="padding-bottom: 20px;">
+                    <li style="font-size: 25px;"> {{ category.name }} </li>
+                </td>
+                <td style="padding-bottom: 20px;">
+                    <a class="btn btn-danger ml-4" style="color: #fff;" href="{% url 'delete-category' category.id %}">Delete</a>
+                </td>
+            </tr>
+            
+            {% endfor %}
+        </table>
+    </div>
+    <form class="form-inline" method="POST" submit="/categories">
+        {% csrf_token %}
+        <div class="form-group mb-2">
+            <label>Add Category</label>
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+            <input type="text" class="form-control category_input" name="new_expense">
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Add</button>
+    </form>
+    <script>
+        $(document).ready(function () {
+            $(".expense_btn").click(function () {
+                $(".expense_btn").css("background-color", "#007bff")
+                $(".expense_btn").css("color", "#fff")
+                $(".income_btn").css("background-color", "transparent")
+                $(".income_btn").css("color", "#007bff")
+                $(".expense").css("display", "block")
+                $(".income").css("display", "none")
+                $(".category_input").attr("name", "new_expense")
+            }
+            )
+            $(".income_btn").click(function () {
+                $(".expense_btn").css("background-color", "transparent")
+                $(".expense_btn").css("color", "#007bff")
+                $(".income_btn").css("background-color", "#007bff")
+                $(".income_btn").css("color", "#fff")
+                $(".expense").css("display", "none")
+                $(".income").css("display", "block")
+                $(".category_input").attr("name", "new_income")
+            }
+            )
+        }
+        )
+
+    </script>
+
+{% endblock content %}

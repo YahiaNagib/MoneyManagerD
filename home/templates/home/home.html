@@ -1,0 +1,40 @@
+{% extends "home/base.html" %}
+{% load tags %}
+{% block content %}
+
+    <div class = "data">
+      Total Income: {{ account.total_income }} <br>
+      Spent: {{ account.total_spendings }}
+      Remaining: {{ account.total_income|subtract:account.total_spendings }}
+      <a class="btn btn-primary btn-lg float-right" href="{% url 'add-item' %}" >Add</a>
+    </div>
+
+    <h2 class="my-3">Details: </h2>
+    {% for data in items %}
+       <article class="media content-section">
+           <div class="media-body">
+              <div class="article-metadata">
+                <small class="text-muted" id="date">{{ data.date }}</small>
+                {% if data.expenses != 0 %}
+                  <small class="text-muted float-right">Expenses: {{ data.expenses }} </small>
+                {% endif %}
+
+                {% if data.income != 0 %}
+                  <small class="text-muted float-right mr-2">Income: {{ data.income }} </small>
+                {% endif %}
+              </div>
+              {% for item in data.items %}
+                <h2><a class="article-title" href="{% url 'item-edit' item.id %}">{{ item.category.name }}</a>
+                </h2>
+                <span class="float-right"> {{ item.value }} </span>
+                <p class="article-content" style="margin-top: -25px;" >
+                     {{item.notes}}
+                </p>
+                {% if item != data.items|last %}
+                  <hr>
+                {% endif %}
+              {% endfor %}
+            </div>
+        </article>
+    {% endfor %}
+{% endblock content %}

@@ -1,0 +1,105 @@
+{% extends "home/base.html" %}
+{% block content %}
+
+<h1> Statistics </h1>
+<div class="content-section">
+    <div id="chartContainer" style="height: 300px; width: 100%;background-color: transparent;"></div>
+</div>
+<div class="content-section">
+    <h2>Expenses list</h2>
+    <br>
+    {% for item in items %}
+    <div class="mb-2 font-weight-bold">
+        <a href="{% url 'statistics-redirect' item.indexLabel  %}" style="color: black; text-decoration: none ; cursor: pointer;">
+            {{ item.indexLabel }} </a>
+        <span class="float-right">{{ item.y }}</span>
+
+        {% if item != items|last %}
+            <hr>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+    window.onload = function () {
+        $.ajaxSetup({
+            headers: { "X-CSRFToken": getCookie("csrftoken") }
+        });
+        $.ajax({
+            url: "/statistics/",
+            'type': 'POST',
+            success: function (items) {   // `data` is the return of the `load_categories` view function
+                var chart = new CanvasJS.Chart("chartContainer",
+                {
+                    backgroundColor: "transparent",
+                    title: {
+                        text: ""
+                    },
+                    legend: {
+                        maxWidth: 350,
+                        itemWidth: 120,
+                        horizontalAlign: "right",
+                        verticalAlign: "center"
+                    },
+                    data: [
+                        {
+                            type: "pie",
+                            showInLegend: true,
+                            legendText: "{indexLabel}",
+                            dataPoints: items,
+                        }
+                    ]
+                });
+            chart.render();  // replace the contents of the category input with the data that came from the server
+            }
+        });
+        function getCookie(c_name) {
+            if (document.cookie.length > 0) {
+                c_start = document.cookie.indexOf(c_name + "=");
+                if (c_start != -1) {
+                    c_start = c_start + c_name.length + 1;
+                    c_end = document.cookie.indexOf(";", c_start);
+                    if (c_end == -1) c_end = document.cookie.length;
+                    return unescape(document.cookie.substring(c_start, c_end));
+                }
+            }
+            return "";
+        }
+        // const request = new XMLHttpRequest();
+        // request.open('POST', '/statistics/');
+        // request.onload = () => {
+
+        //     // Extract JSON data from request
+        //     var items = JSON.parse(request.responseText);
+        //     var chart = new CanvasJS.Chart("chartContainer",
+        //         {
+        //             backgroundColor: "transparent",
+        //             title: {
+        //                 text: ""
+        //             },
+        //             legend: {
+        //                 maxWidth: 350,
+        //                 itemWidth: 120,
+        //                 horizontalAlign: "right",
+        //                 verticalAlign: "center"
+        //             },
+        //             data: [
+        //                 {
+        //                     type: "pie",
+        //                     showInLegend: true,
+        //                     legendText: "{indexLabel}",
+        //                     dataPoints: items,
+        //                 }
+        //             ]
+        //         });
+        //     console.log(items)
+        //     chart.render();
+        // }
+        // request.send();
+    }
+
+
+</script>
+
+{% endblock content %}
