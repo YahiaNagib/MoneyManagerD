@@ -23,9 +23,8 @@ def data_reshaping(items):
     return sorted(data, key=lambda i: i['date'], reverse=True)
 
 
-def get_statistics(user):
-    #expenses only for now
-    categories = Category.objects.filter(category_type_id = 1)
+def get_statistics(user, CategoryTypeId):
+    categories = Category.objects.filter(category_type_id = CategoryTypeId)
     arr = []
     sum = 0
     for category in categories:

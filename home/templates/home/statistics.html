@@ -1,21 +1,43 @@
 {% extends "home/base.html" %}
 {% block content %}
 
-<h1> Statistics </h1>
+<div style="margin-bottom: 70px;">
+    <h1 class="mb-2 float-left"> Statistics </h1>
+    <button class="btn btn-outline-primary income_btn float-right ml-2">Income</button>
+    <button class="btn btn-outline-primary expense_btn float-right"
+        style="background-color: #007bff; color: #fff">Expenses</button>
+</div>
 <div class="content-section">
     <div id="chartContainer" style="height: 300px; width: 100%;background-color: transparent;"></div>
 </div>
-<div class="content-section">
+<div class="content-section expenses-list">
     <h2>Expenses list</h2>
     <br>
-    {% for item in items %}
+    {% for item in items_expenses %}
     <div class="mb-2 font-weight-bold">
-        <a href="{% url 'statistics-redirect' item.indexLabel  %}" style="color: black; text-decoration: none ; cursor: pointer;">
+        <a href="{% url 'statistics-redirect' item.indexLabel  %}"
+            style="color: black; text-decoration: none ; cursor: pointer;">
             {{ item.indexLabel }} </a>
         <span class="float-right">{{ item.y }}</span>
 
-        {% if item != items|last %}
-            <hr>
+        {% if item != items_expenses|last %}
+        <hr>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+<div class="content-section income-list" style="display: none;"> 
+    <h2>Income list</h2>
+    <br>
+    {% for item in items_income %}
+    <div class="mb-2 font-weight-bold">
+        <a href="{% url 'statistics-redirect' item.indexLabel  %}"
+            style="color: black; text-decoration: none ; cursor: pointer;">
+            {{ item.indexLabel }} </a>
+        <span class="float-right">{{ item.y }}</span>
+
+        {% if item != items_income|last %}
+        <hr>
         {% endif %}
     </div>
     {% endfor %}
@@ -23,37 +45,45 @@
 
 <script>
     window.onload = function () {
-        $.ajaxSetup({
-            headers: { "X-CSRFToken": getCookie("csrftoken") }
-        });
-        $.ajax({
-            url: "/statistics/",
-            'type': 'POST',
-            success: function (items) {   // `data` is the return of the `load_categories` view function
-                var chart = new CanvasJS.Chart("chartContainer",
-                {
-                    backgroundColor: "transparent",
-                    title: {
-                        text: ""
-                    },
-                    legend: {
-                        maxWidth: 350,
-                        itemWidth: 120,
-                        horizontalAlign: "right",
-                        verticalAlign: "center"
-                    },
-                    data: [
+        
+        CallAjax(1) // to call for expenses items from the server, 1 means expenses (default)
+
+        function CallAjax(categoryTypeId) {
+            $.ajaxSetup({
+                headers: { "X-CSRFToken": getCookie("csrftoken") }
+            });
+            $.ajax({
+                url: "/statistics/",
+                data: {
+                    'CategoryType': categoryTypeId       // add the category id to the GET parameters
+                },
+                'type': 'POST',
+                success: function (items) {   // `items` is the return of the `load_categories` view function
+                    var chart = new CanvasJS.Chart("chartContainer",
                         {
-                            type: "pie",
-                            showInLegend: true,
-                            legendText: "{indexLabel}",
-                            dataPoints: items,
-                        }
-                    ]
-                });
-            chart.render();  // replace the contents of the category input with the data that came from the server
-            }
-        });
+                            backgroundColor: "transparent",
+                            title: {
+                                text: ""
+                            },
+                            legend: {
+                                maxWidth: 350,
+                                itemWidth: 120,
+                                horizontalAlign: "right",
+                                verticalAlign: "center"
+                            },
+                            data: [
+                                {
+                                    type: "pie",
+                                    showInLegend: true,
+                                    legendText: "{indexLabel}",
+                                    dataPoints: items,
+                                }
+                            ]
+                        });
+                    chart.render();  // replace the contents of the category input with the data that came from the server
+                }
+            });
+        }
         function getCookie(c_name) {
             if (document.cookie.length > 0) {
                 c_start = document.cookie.indexOf(c_name + "=");
@@ -66,40 +96,29 @@
             }
             return "";
         }
-        // const request = new XMLHttpRequest();
-        // request.open('POST', '/statistics/');
-        // request.onload = () => {
-
-        //     // Extract JSON data from request
-        //     var items = JSON.parse(request.responseText);
-        //     var chart = new CanvasJS.Chart("chartContainer",
-        //         {
-        //             backgroundColor: "transparent",
-        //             title: {
-        //                 text: ""
-        //             },
-        //             legend: {
-        //                 maxWidth: 350,
-        //                 itemWidth: 120,
-        //                 horizontalAlign: "right",
-        //                 verticalAlign: "center"
-        //             },
-        //             data: [
-        //                 {
-        //                     type: "pie",
-        //                     showInLegend: true,
-        //                     legendText: "{indexLabel}",
-        //                     dataPoints: items,
-        //                 }
-        //             ]
-        //         });
-        //     console.log(items)
-        //     chart.render();
-        // }
-        // request.send();
+        $(".expense_btn").click(function () {
+            CallAjax(1)
+            $(".expense_btn").css("background-color", "#007bff")
+            $(".expense_btn").css("color", "#fff")
+            $(".income_btn").css("background-color", "transparent")
+            $(".income_btn").css("color", "#007bff")
+            $(".expenses-list").css("display", "block")
+            $(".income-list").css("display", "none")
+            $(".category_input").attr("name", "new_expense")
+        }
+        )
+        $(".income_btn").click(function () {
+            CallAjax(2)
+            $(".expense_btn").css("background-color", "transparent")
+            $(".expense_btn").css("color", "#007bff")
+            $(".income_btn").css("background-color", "#007bff")
+            $(".income_btn").css("color", "#fff")
+            $(".expenses-list").css("display", "none")
+            $(".income-list").css("display", "block")
+            $(".category_input").attr("name", "new_income")
+        }
+        )
     }
-
-
 </script>
 
 {% endblock content %}

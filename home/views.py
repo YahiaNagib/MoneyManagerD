@@ -94,10 +94,19 @@ def delete_category(request, id):
     return redirect("home")
 
 def statistics(request):
-    items = get_statistics(request.user)
+    items_expenses = get_statistics(request.user, 1)
+    items_income = get_statistics(request.user, 2)
+    context={
+        'title': 'statistics',
+        'items_expenses': items_expenses,
+        'items_income': items_income
+    }
     if request.method == "POST":
-        return JsonResponse(items, safe=False)
-    return render(request, 'home/statistics.html', {'title': 'statistics', 'items': items})
+        if int(request.POST.get("CategoryType")) == 1:
+            return JsonResponse(items_expenses, safe=False)
+        else:
+            return JsonResponse(items_income, safe=False)
+    return render(request, 'home/statistics.html', context)
 
 def category_statisitcs_redirect(request, category_name):
     name = category_name.replace('%', "0")
@@ -110,7 +119,7 @@ def category_statistics(request, category_name):
     category = Category.objects.filter(name = category_name).first()
     context = {
         'title': "Statistics",
-        'items': category.items.all().order_by("-value")
+        'items': category.items.filter(user=request.user).order_by("-value")
      }
     return render(request, "home/item_statistics.html", context)
 
