@@ -22,25 +22,19 @@ class AddItemForm(ModelForm):
         }
         fields = ['category_type', 'category', 'date', 'value', 'notes']
 
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-        # self.fields['category'].queryset = Category.objects.none()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['category'].queryset = Category.objects.none()
 
-        # if 'CategoryType' in self.data:
-        #     try:
-        #         category_type =CategoryType.objects.filter(id=int(self.data.get('CategoryType'))).first()
-        #         self.fields['category'].queryset = Category.objects.filter(
-        #             category_type=category_type)
-        #     except (ValueError, TypeError):
-        #         pass  # invalid input from the client; ignore and fallback to empty City queryset
-        # elif self.instance.pk:
-        #     self.fields['category'].queryset = self.instance.CategoryType
+        if 'category_type' in self.data:
+            try:
+                category_type =CategoryType.objects.filter(id=int(self.data.get('category_type'))).first()
+                self.fields['category'].queryset = Category.objects.filter(
+                    category_type=category_type)
+            except (ValueError, TypeError):
+                pass  # invalid input from the client; ignore and fallback to empty City queryset
+        elif self.instance.pk:
+            # self.fields['category'].queryset = self.instance.CategoryType
+            self.fields['category'].queryset = Category.objects.filter(
+                    category_type=self.instance.category.category_type)
 
-    # category = forms.ModelChoiceField(
-    #     queryset=Category.objects.all(),
-    #     label="Category"
-    # )
-
-    # date = forms.DateField()
-    # value = forms.FloatField()
-    # notes = forms.CharField(widget=forms.Textarea)
