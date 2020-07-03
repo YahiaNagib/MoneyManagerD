@@ -41,17 +41,28 @@ def edit_item(request, id):
     if request.method == "POST":
         item = Item.objects.filter(id=id).first()
         old_value = item.value
+        old_category_type = item.category.category_type.type_name
         form = AddItemForm(request.POST, instance=item)
         account = Account.objects.filter(user=request.user).first()
         if form.is_valid():
-            if str(form.cleaned_data["category_type"]) == "Expenses":
-                account.total_spendings = account.total_spendings - old_value
-                account.total_spendings = account.total_spendings + form.cleaned_data.get("value")
-                account.save()
+            if str(form.cleaned_data["category_type"]) != old_category_type:
+                if str(form.cleaned_data["category_type"]) == "Expenses":
+                    account.total_income = account.total_income - old_value
+                    account.total_spendings = account.total_spendings + form.cleaned_data.get("value")
+                    account.save()
+                else:
+                    account.total_spendings = account.total_spendings - old_value
+                    account.total_income = account.total_income + form.cleaned_data.get("value")
+                    account.save()
             else:
-                account.total_income = account.total_income - old_value
-                account.total_income = account.total_income + form.cleaned_data.get("value")
-                account.save()
+                if str(form.cleaned_data["category_type"]) == "Expenses":
+                    account.total_spendings = account.total_spendings - old_value
+                    account.total_spendings = account.total_spendings + form.cleaned_data.get("value")
+                    account.save()
+                else:
+                    account.total_income = account.total_income - old_value
+                    account.total_income = account.total_income + form.cleaned_data.get("value")
+                    account.save()
             form.save()
             messages.success(request, "Item has been updated")
             return redirect("home")

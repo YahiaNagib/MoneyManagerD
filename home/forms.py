@@ -9,16 +9,16 @@ class AddItemForm(ModelForm):
         queryset=CategoryType.objects.all(),
         label="Category Type",
         widget=forms.Select(
-            attrs={'class': 'category_type_list form-control form-control-lg'})
+            attrs={'class': 'category_type_list form-control form-control-lg mb-2'})
     )
 
     class Meta:
         model = Item
         widgets = {
-            'category': forms.Select(attrs={'class': 'category_types form-control form-control-lg'}),
-            'date': forms.DateInput(attrs={'class': 'date_field form-control form-control-lg', 'type': 'date'}),
-            'value': forms.TextInput(attrs={'class': 'form-control form-control-lg'}),
-            'notes': forms.Textarea(attrs={'class': 'form-control form-control-lg', 'style': 'height: 150px;'}),
+            'category': forms.Select(attrs={'class': 'category_types form-control form-control-lg mb-2'}),
+            'date': forms.DateInput(attrs={'class': 'date_field form-control form-control-lg mb-2', 'type': 'date'}),
+            'value': forms.TextInput(attrs={'class': 'form-control form-control-lg mb-2'}),
+            'notes': forms.Textarea(attrs={'class': 'form-control form-control-lg mb-2', 'style': 'height: 130px;'}),
         }
         fields = ['category_type', 'category', 'date', 'value', 'notes']
 
