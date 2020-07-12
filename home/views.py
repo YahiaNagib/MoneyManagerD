@@ -7,8 +7,8 @@ from .forms import AddItemForm
 from .utils import data_reshaping, get_statistics, account_after_item_delete
 
 def home(request):
-    items = Item.objects.filter(user=request.user).all()
-    account = Account.objects.filter(user=request.user).first()
+    account = Account.objects.filter(user=request.user, active=True).first()
+    items = Item.objects.filter(account=account).all()
     context = {
         'title': account.user.username,
         'items': data_reshaping(items),
@@ -134,9 +134,7 @@ def category_statistics(request, category_name):
      }
     return render(request, "home/item_statistics.html", context)
 
-
 def load_categories(request):
     Category_Type =CategoryType.objects.filter(id=request.GET.get('CategoryType')).first()
     categories = Category.objects.filter(category_type=Category_Type)
     return render(request, 'home/category_dropdown.html', {'categories': categories})
-
