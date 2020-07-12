@@ -4,7 +4,6 @@
 
     <h2> Accounts for user: {{ user.username }} </h2>
     
-    
     {% for account in accounts %}
         <div class="content-section mt-4">
             <div>
@@ -12,7 +11,9 @@
                 {% if account.active %}
                     <div class="float-right mt-3"> Activated </div>
                 {% else %}
-                    <div class="float-right mt-3"> Not </div>
+                    <div class="float-right mt-3">
+                        <a href="/activate/{{ account.id }}" class="btn btn-primary"> Activate </a>    
+                    </div>
                 {% endif %}
             </div>
             <h4 style="clear: both;">Total: {{ account.total_income|subtract:account.total_spendings }}</h4>

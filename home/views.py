@@ -113,6 +113,18 @@ def accounts(request):
     return render(request, 'home/accounts.html', context)
 
 
+def activate_account(request, id):
+    accounts = Account.objects.filter(user=request.user).all()
+    for account in accounts:
+        if account.id == id:
+            account.active = True
+        else:
+            account.active = False
+        account.save()
+    account = Account.objects.filter(user=request.user, active=True).first()
+    messages.success(request, f"Account {account.name} is activated")
+    return redirect("home")
+
 def statistics(request):
     items_expenses = get_statistics(request.user, 1)
     items_income = get_statistics(request.user, 2)
