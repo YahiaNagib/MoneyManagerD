@@ -149,9 +149,10 @@ def category_statisitcs_redirect(request, category_name):
 
 def category_statistics(request, category_name):
     category = Category.objects.filter(name = category_name).first()
+    account = Account.objects.filter(user=request.user, active=True).first()
     context = {
         'title': "Statistics",
-        'items': category.items.filter(user=request.user).order_by("-value")
+        'items': category.items.filter(account=account).order_by("-value")
      }
     return render(request, "home/item_statistics.html", context)
 

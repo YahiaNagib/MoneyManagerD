@@ -10,7 +10,7 @@
     <hr>
     {% for item in items %}
         <div class="font-weight-bold">
-            <a style="font-size: 20px; color: black;" href="{% url 'item-edit' item.id %}">{{ item.notes }}</a>
+            <a style="font-size: 20px; color: black; text-decoration: none;" href="{% url 'item-edit' item.id %}">{{ item.notes }}</a>
             <span class="float-right">{{ item.value }}</span>
             <br>
             <span> {{item.date|date:"M d, Y"}}</span>
