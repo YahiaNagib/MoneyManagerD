@@ -3,8 +3,9 @@
 {% block content %}
 
     <div class = "data">
+      Account Name: {{account.name}} <br>
       Total Income: {{ account.total_income }} <br>
-      Spent: {{ account.total_spendings }}
+      Spent: {{ account.total_spendings }},
       Remaining: {{ account.total_income|subtract:account.total_spendings }}
       <a class="btn btn-primary btn-lg float-right" href="{% url 'add-item' %}" >Add</a>
     </div>

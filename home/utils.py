@@ -25,12 +25,13 @@ def data_reshaping(items):
 
 def get_statistics(user, CategoryTypeId):
     categories = Category.objects.filter(category_type_id = CategoryTypeId)
+    account = Account.objects.filter(user=user, active=True).first()
     arr = []
     sum = 0
     for category in categories:
          dic = {}
          values = 0
-         for item in category.items.filter(user=user).all():
+         for item in category.items.filter(account=account).all():
              values = values + abs(item.value)
          if values == 0:
              continue
@@ -48,7 +49,7 @@ def get_statistics(user, CategoryTypeId):
 
 
 def account_after_item_delete(user, item):
-    account = Account.objects.filter(user=user).first()
+    account = Account.objects.filter(user=user, active=True).first()
     if item.category.category_type_id == 1:
         account.total_spendings = account.total_spendings - item.value
         account.save()
