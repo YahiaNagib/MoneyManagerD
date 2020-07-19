@@ -1,6 +1,7 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from .models import Item, Category, CategoryType, Account
 from .forms import AddItemForm
@@ -74,6 +75,7 @@ def edit_item(request, id):
         form = AddItemForm(instance=item, initial={'category_type': item.category.category_type})
         return render(request, 'home/edititem.html', {'form': form, 'title': "Edit Item", 'id': id})
 
+@login_required
 def delete_item(request, id):
     item = Item.objects.get(pk=id)
     account_after_item_delete(request.user, item)
@@ -81,6 +83,7 @@ def delete_item(request, id):
     messages.success(request, "Category has been deleted")
     return redirect("home")
 
+@login_required
 def categories(request):
     if request.method == "POST":
         if request.POST.get("new_expense"):
@@ -98,6 +101,7 @@ def categories(request):
         }
         return render(request, 'home/categories.html', context)
 
+@login_required
 def delete_category(request, id):
     category = Category.objects.get(pk=id)
     account = Account.objects.filter(user=request.user).first()
@@ -107,6 +111,7 @@ def delete_category(request, id):
     messages.success(request, "Category has been deleted")
     return redirect("home")
 
+@login_required
 def accounts(request):
     context={
         'title': 'Accounts',
@@ -115,7 +120,7 @@ def accounts(request):
     }
     return render(request, 'home/accounts.html', context)
 
-
+@login_required
 def activate_account(request, id):
     accounts = Account.objects.filter(user=request.user).all()
     for account in accounts:
@@ -128,6 +133,7 @@ def activate_account(request, id):
     messages.success(request, f"Account {account.name} is activated")
     return redirect("home")
 
+@login_required
 def statistics(request):
     items_expenses = get_statistics(request.user, 1)
     items_income = get_statistics(request.user, 2)
@@ -143,6 +149,7 @@ def statistics(request):
             return JsonResponse(items_income, safe=False)
     return render(request, 'home/statistics.html', context)
 
+@login_required
 def category_statisitcs_redirect(request, category_name):
     name = category_name.replace('%', "0")
     name = name.replace('.', "0")
@@ -150,6 +157,7 @@ def category_statisitcs_redirect(request, category_name):
     result = name.rstrip()
     return redirect(f"/statistics/{result}")
 
+@login_required
 def category_statistics(request, category_name):
     category = Category.objects.filter(name = category_name).first()
     account = Account.objects.filter(user=request.user, active=True).first()
@@ -158,6 +166,10 @@ def category_statistics(request, category_name):
         'items': category.items.filter(account=account).order_by("-value")
      }
     return render(request, "home/item_statistics.html", context)
+
+def logout_user(request):
+    logout(request)
+    return redirect("login")
 
 def load_categories(request):
     Category_Type =CategoryType.objects.filter(id=request.GET.get('CategoryType')).first()
