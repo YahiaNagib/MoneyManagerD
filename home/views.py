@@ -6,8 +6,10 @@ from .models import Item, Category, CategoryType, Account
 from .forms import AddItemForm
 from .utils import data_reshaping, get_statistics, account_after_item_delete
 
-@login_required
 def home(request):
+    if not request.user.is_authenticated:
+        messages.warning(request, "Please login to continue")
+        return redirect("login")
     account = Account.objects.filter(user=request.user, active=True).first()
     items = Item.objects.filter(account=account).all()
     context = {
