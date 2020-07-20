@@ -15,10 +15,10 @@ class Category(models.Model):
 
 class Account(models.Model):
     user = models.ForeignKey(User, related_name="accounts", on_delete=models.CASCADE)
-    name = models.CharField(max_length=50, default="account")
-    total_income = models.FloatField()
-    total_spendings = models.FloatField()
-    active = models.BooleanField(default=False)
+    name = models.CharField(max_length=50, default="Personal Account")
+    total_income = models.FloatField(default=0)
+    total_spendings = models.FloatField(default=0)
+    active = models.BooleanField(default=True)
     def __str__(self):
         return f"name: {self.name}, user: {self.user.username}, Income: {self.total_income}, Spent: {self.total_spendings}"
 

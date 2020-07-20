@@ -15,6 +15,7 @@ urlpatterns = [
     path('statisitcs/redirect/<str:category_name>', views.category_statisitcs_redirect, name="statistics-redirect"),
     path('statistics/<str:category_name>', views.category_statistics, name="statistics-category"),
     path('activate/<int:id>', views.activate_account, name="activate"),
+    path('register/', views.register, name="register"),
     path('login/', auth_views.LoginView.as_view(template_name="home/login.html"), name='login'),
     path('logout/', views.logout_user, name="logout"),
     path('ajax/load-categories/', views.load_categories, name='ajax_load_categories')

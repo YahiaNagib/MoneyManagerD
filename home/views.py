@@ -2,9 +2,10 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import logout
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .models import Item, Category, CategoryType, Account
-from .forms import AddItemForm
+from .forms import AddItemForm, UserRegisterForm
 from .utils import data_reshaping, get_statistics, account_after_item_delete
 
 def home(request):
@@ -110,6 +111,21 @@ def delete_category(request, id):
     # category.delete()
     messages.success(request, "Category has been deleted")
     return redirect("home")
+
+def register(request):
+    if request.method == "POST":
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request, "Your account has been created, you are now able to login")
+            user = User.objects.filter(username=str(form.cleaned_data["username"])).first()
+            account = Account(user=user)
+            account.save()
+            return redirect("login")
+    else:
+        form = UserRegisterForm()
+    return render(request, 'home/register.html', {'form': form})
 
 @login_required
 def accounts(request):
