@@ -19,7 +19,8 @@ class AddItemForm(ModelForm):
         queryset=CategoryType.objects.all(),
         label="Category Type",
         widget=forms.Select(
-            attrs={'class': 'category_type_list form-control form-control-lg mb-2'})
+            attrs={'class': 'category_type_list form-control form-control-lg mb-2'}),
+        initial=CategoryType.objects.get(pk=1)
     )
 
     class Meta:
@@ -34,7 +35,8 @@ class AddItemForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['category'].queryset = Category.objects.none()
+        self.fields['category'].queryset = Category.objects.filter(
+                    category_type=1)
 
         if 'category_type' in self.data:
             try:

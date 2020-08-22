@@ -7,13 +7,18 @@ from django.contrib.auth.decorators import login_required
 from .models import Item, Category, CategoryType, Account
 from .forms import AddItemForm, UserRegisterForm
 from .utils import data_reshaping, get_statistics, account_after_item_delete
+from datetime import datetime
 
 def home(request):
     if not request.user.is_authenticated:
         messages.warning(request, "Please login to continue")
         return redirect("login")
+    if request.GET.get('m'):
+        Month = int(request.GET.get('m'))
+    else:
+        Month = datetime.now().month
     account = Account.objects.filter(user=request.user, active=True).first()
-    items = Item.objects.filter(account=account).all()
+    items = Item.objects.filter(account=account, date__month=Month).all()
     context = {
         'title': account.user.username,
         'items': data_reshaping(items),
@@ -191,3 +196,5 @@ def load_categories(request):
     Category_Type =CategoryType.objects.filter(id=request.GET.get('CategoryType')).first()
     categories = Category.objects.filter(category_type=Category_Type)
     return render(request, 'home/category_dropdown.html', {'categories': categories})
+
+ 
