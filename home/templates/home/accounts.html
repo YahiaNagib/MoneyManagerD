@@ -16,7 +16,7 @@
                     </div>
                 {% endif %}
             </div>
-            <h4 style="clear: both;">Total: {{ account.total_income|subtract:account.total_spendings }}</h4>
+            <h4 class="clear-fix">Total: {{ account.total_income|subtract:account.total_spendings }}</h4>
         </div>
     {% endfor %}
 

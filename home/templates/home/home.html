@@ -46,7 +46,7 @@
                 <h2><a class="article-title" href="{% url 'item-edit' item.id %}">{{ item.category.name }}</a>
                 </h2>
                 <span class="float-right"> {{ item.value }} </span>
-                <p class="article-content" style="margin-top: -25px;" >
+                <p class="article-content" >
                      {{item.notes}}
                 </p>
                 {% if item != data.items|last %}

@@ -1,22 +1,21 @@
 {% extends "home/base.html" %}
 {% block content %}
 
-<div style="margin-bottom: 70px;" class="container">
+<div class="statistics-heading container">
     <h1 class="mb-2 float-left"> Statistics </h1>
     <button class="btn btn-outline-primary income_btn float-right ml-2">Income</button>
-    <button class="btn btn-outline-primary expense_btn float-right"
-        style="background-color: #007bff; color: #fff">Expenses</button>
+    <button class="statistics-income-btn btn btn-outline-primary expense_btn float-right"
+        >Expenses</button>
 </div>
 <div class="content-section">
-    <div id="chartContainer" style="height: 300px; width: 100%;background-color: transparent;"></div>
+    <div id="chartContainer"></div>
 </div>
 <div class="content-section expenses-list">
     <h2>Expenses list</h2>
     <br>
     {% for item in items_expenses %}
-    <div class="mb-2 font-weight-bold">
-        <a href="{% url 'statistics-redirect' item.indexLabel  %}"
-            style="color: black; text-decoration: none ; cursor: pointer;">
+    <div class="statistics-list mb-2 font-weight-bold">
+        <a href="{% url 'statistics-redirect' item.indexLabel  %}">
             {{ item.indexLabel }} </a>
         <span class="float-right">{{ item.y }}</span>
 
@@ -30,9 +29,8 @@
     <h2>Income list</h2>
     <br>
     {% for item in items_income %}
-    <div class="mb-2 font-weight-bold">
-        <a href="{% url 'statistics-redirect' item.indexLabel  %}"
-            style="color: black; text-decoration: none ; cursor: pointer;">
+    <div class="statistics-list mb-2 font-weight-bold">
+        <a href="{% url 'statistics-redirect' item.indexLabel  %}">
             {{ item.indexLabel }} </a>
         <span class="float-right">{{ item.y }}</span>
 

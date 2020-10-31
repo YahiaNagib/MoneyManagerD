@@ -6,7 +6,7 @@
     {% csrf_token %}
     <legend class="border-bottom mb-2">Add item
         <input class="btn btn-primary float-right" type="submit" value="Edit">
-        <a class="btn btn-danger float-right mr-3" style="color:#fff" href="{% url 'delete-item' id %}" > 
+        <a class="btn btn-danger float-right mr-3" href="{% url 'delete-item' id %}" > 
             Delete 
         </a>
     </legend>

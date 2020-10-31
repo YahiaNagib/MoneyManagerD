@@ -193,8 +193,8 @@ def logout_user(request):
     return redirect("login")
 
 def load_categories(request):
-    Category_Type =CategoryType.objects.filter(id=request.GET.get('CategoryType')).first()
-    categories = Category.objects.filter(category_type=Category_Type)
+    category_type =CategoryType.objects.filter(id=request.GET.get('CategoryType')).first()
+    categories = Category.objects.filter(category_type=category_type)
     return render(request, 'home/category_dropdown.html', {'categories': categories})
 
  

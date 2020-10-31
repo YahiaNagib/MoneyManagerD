@@ -48,6 +48,7 @@ a.article-title:hover {
 
 .article-content {
   white-space: pre-line;
+  margin-top: -25px;
 }
 
 .article-img {
@@ -92,4 +93,75 @@ a.article-title:hover {
 #date {
   font-weight: bold;
   font-size: large;
+}
+
+.active-delete {
+  display: inline;
+}
+
+/* categories */
+.category-heading {
+  margin-bottom: 70px;
+}
+
+.category-income-btn {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.table-category-name {
+  padding-bottom: 20px;
+}
+
+.table-category-name li {
+  font-size: 25px;
+}
+
+.category-delete-btn {
+  padding-bottom: 20px; display: none;
+}
+
+.category-delete-btn i {
+  color: red;
+}
+
+/* end categories */
+
+/* statitics */
+
+.statistics-heading {
+  margin-bottom: 70px;
+}
+
+.statistics-income-btn {
+  background-color: #007bff;
+  color: #fff;
+}
+
+#chartContainer {
+  height: 300px;
+  width: 100%;
+  background-color: transparent;
+}
+
+.statistics-list a {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* end statistics */
+
+/* item-statistics */
+
+.statistics-item a {
+  font-size: 20px;
+  color: black;
+  text-decoration: none;
+}
+
+/* end item-statistics */
+
+.clear-fix {
+  clear: both;
 }

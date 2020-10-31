@@ -9,8 +9,8 @@
     <h1 class="mb-3">Details:</h1>
     <hr>
     {% for item in items %}
-        <div class="font-weight-bold">
-            <a style="font-size: 20px; color: black; text-decoration: none;" href="{% url 'item-edit' item.id %}">{{ item.notes }}</a>
+        <div class="statistics-item font-weight-bold">
+            <a href="{% url 'item-edit' item.id %}">{{ item.notes }}</a>
             <span class="float-right">{{ item.value }}</span>
             <br>
             <span> {{item.date|date:"M d, Y"}}</span>

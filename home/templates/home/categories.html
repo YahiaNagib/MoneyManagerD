@@ -1,21 +1,23 @@
 {% extends "home/base.html" %}
 {% block content %}
-    <div style="margin-bottom: 70px;">
+    <div class="category-heading">
         <h1 class="mb-2 float-left">Categories</h1>
         <button class="btn btn-outline-primary income_btn float-right ml-2">Income</button>
-        <button class="btn btn-outline-primary expense_btn float-right"
-            style="background-color: #007bff; color: #fff">Expenses</button>
+        <button class="category-income-btn btn btn-outline-primary expense_btn float-right"
+            >Expenses</button>
     </div>
 
     <div class="content-section expense">
         <table>
             {% for category in expense_categories %}
-            <tr >
-                <td style="padding-bottom: 20px;">
-                    <li style="font-size: 25px;"> {{ category.name }} </li>
+            <tr class="table-row" >
+                <td class="table-category-name">
+                    <li> {{ category.name }} </li>
                 </td>
-                <td style="padding-bottom: 20px;">
-                    <a class="btn btn-danger ml-4" style="color: #fff;" href="{% url 'delete-category' category.id %}">Delete</a>
+                <td class="category-delete-btn">
+                    <a href="{% url 'delete-category' category.id %}">
+                        <i class="fas fa-trash-alt ml-4"></i>
+                    </a>
                 </td>
             </tr>
             {% endfor %}
@@ -25,15 +27,16 @@
     <div class="content-section income" style="display: none;">
         <table>
             {% for category in income_categories %}
-            <tr >
-                <td style="padding-bottom: 20px;">
-                    <li style="font-size: 25px;"> {{ category.name }} </li>
+            <tr class="table-row">
+                <td class="table-category-name">
+                    <li> {{ category.name }} </li>
                 </td>
-                <td style="padding-bottom: 20px;">
-                    <a class="btn btn-danger ml-4" style="color: #fff;" href="{% url 'delete-category' category.id %}">Delete</a>
+                <td class="category-delete-btn">
+                    <a href="{% url 'delete-category' category.id %}">
+                        <i class="fas fa-trash-alt ml-4"></i>
+                    </a>
                 </td>
             </tr>
-            
             {% endfor %}
         </table>
     </div>
@@ -71,6 +74,15 @@
             )
         }
         )
+
+        $(".table-row").hover(
+        function() {
+            $(this).find(".category-delete-btn").show();
+        },
+        function() {
+            $(this).find(".category-delete-btn").hide();
+        }
+        );
 
     </script>
 
