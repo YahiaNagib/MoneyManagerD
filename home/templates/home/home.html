@@ -57,18 +57,4 @@
         </article>
     {% endfor %}
 
-    <script>
-      var urlParams = new URLSearchParams(window.location.search);
-      console.log(urlParams.get('m'));
-      if (urlParams.get('m')){
-        document.querySelector("#month").selectedIndex = parseInt(urlParams.get('m')) - 1;
-      }else{
-        var d = new Date();
-        document.querySelector("#month").selectedIndex = d.getMonth();
-      }
-
-      document.querySelector("#month").onchange = function(){
-        window.location.href = `/?m=${this.selectedIndex + 1}`;
-      };
-    </script>
 {% endblock content %}
