@@ -1,9 +1,0 @@
-- Accounts page:
-    - Accounts can be deleted.
-    - Accounts can be renamed.
-    - Items and categories are related to accounts.
-
-- Add month and year filter in both home page and statistics page.
-
-- Advanced search:
-    - Search by category, date range, value range, ...etc
