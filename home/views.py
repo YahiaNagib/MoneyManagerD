@@ -109,13 +109,14 @@ def categories(request):
 
 @login_required
 def delete_category(request, id):
-    category = Category.objects.get(pk=id)
-    account = Account.objects.filter(user=request.user).first()
+    pass
+    # category = Category.objects.get(pk=id)
+    # account = Account.objects.filter(user=request.user).first()
     # for item in category.items.all():
     #     account_after_item_delete(request.user, item)
     # category.delete()
-    messages.success(request, "Category has been deleted")
-    return redirect("home")
+    # messages.success(request, "Category has been deleted")
+    # return redirect("home")
 
 def register(request):
     if request.method == "POST":
@@ -134,25 +135,27 @@ def register(request):
 
 @login_required
 def accounts(request):
-    context={
-        'title': 'Accounts',
-        'user': request.user,
-        'accounts': Account.objects.filter(user=request.user).all()
-    }
-    return render(request, 'home/accounts.html', context)
+    pass
+    # context={
+    #     'title': 'Accounts',
+    #     'user': request.user,
+    #     'accounts': Account.objects.filter(user=request.user).all()
+    # }
+    # return render(request, 'home/accounts.html', context)
 
 @login_required
 def activate_account(request, id):
-    accounts = Account.objects.filter(user=request.user).all()
-    for account in accounts:
-        if account.id == id:
-            account.active = True
-        else:
-            account.active = False
-        account.save()
-    account = Account.objects.filter(user=request.user, active=True).first()
-    messages.success(request, f"Account {account.name} is activated")
-    return redirect("home")
+    pass
+#     accounts = Account.objects.filter(user=request.user).all()
+#     for account in accounts:
+#         if account.id == id:
+#             account.active = True
+#         else:
+#             account.active = False
+#         account.save()
+#     account = Account.objects.filter(user=request.user, active=True).first()
+#     messages.success(request, f"Account {account.name} is activated")
+#     return redirect("home")
 
 @login_required
 def statistics(request):
