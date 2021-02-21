@@ -1,5 +1,5 @@
 {% extends "home/base.html" %}
-<!-- {% load crispy_forms_tags %} -->
+{% load static %}
 {% block content %}
 
 <form action="#" method="post" id="ItemForm" category-url="{% url 'ajax_load_categories' %}">
@@ -12,4 +12,5 @@
     </legend>
     {{ form }}
 </form>
+<script src="{% static 'home/editItem.js' %}"></script>
 {% endblock content %}

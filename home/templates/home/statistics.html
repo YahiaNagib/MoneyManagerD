@@ -1,4 +1,5 @@
 {% extends "home/base.html" %}
+{% load static %}
 {% block content %}
 
 <div class="statistics-heading container">
@@ -40,5 +41,5 @@
     </div>
     {% endfor %}
 </div>
-
+<script src="{% static 'home/statistics.js' %}"></script>
 {% endblock content %}

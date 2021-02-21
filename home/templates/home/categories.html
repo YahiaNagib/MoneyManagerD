@@ -1,4 +1,5 @@
 {% extends "home/base.html" %}
+{% load static %}
 {% block content %}
     <div class="category-heading">
         <h1 class="mb-2 float-left">Categories</h1>
@@ -50,5 +51,6 @@
         </div>
         <button type="submit" class="btn btn-primary mb-2">Add</button>
     </form>
+    <script src="{% static 'home/categories.js' %}"></script>
 
 {% endblock content %}

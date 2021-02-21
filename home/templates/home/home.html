@@ -1,5 +1,6 @@
 {% extends "home/base.html" %}
 {% load tags %}
+{% load static %}
 {% block content %}
 
     <div class = "data">
@@ -56,5 +57,5 @@
             </div>
         </article>
     {% endfor %}
-
+    <script src="{% static 'home/home.js' %}"></script>
 {% endblock content %}
