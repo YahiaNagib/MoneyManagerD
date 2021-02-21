@@ -28,8 +28,7 @@ This application is used to manage financial data for a user, the user can add t
 * The model includes 4 tables, they are CategoryType, Category, Account and Item. There is also a User table added by default.
 * CategoryType table includes only two entries which are income and expenses, this table has a one to many relationship with Category table.
 * Category table used to store categories which are added by the user.
-* Account table is used to map between the item and the user because each item must has a user. The user can has multiple accounts but this feature has not been added yet.
-* Account table inclued the user, the name of the account, total income, total expenses and whether this account is active or not.
+* Account table is used to map between the item and the user because each item must has a user.
 * Item table can store an item which has five properties: the date, value, category, account which is associated with a user and notes.
 
 #### forms.py
@@ -53,11 +52,14 @@ This application is used to manage financial data for a user, the user can add t
 * edit_item: to edit items in the database.
 * delete_item: to delete an item.
 * categories: to render the categories page.
-* delete_category: to delete a category. (not working at this moment)
 * register: to register a user.
-* accounts: to render the accounts page (not implemented in the frontend yet)
-* activate_account: to activate an account to view its data.
 * statistics: render the statistics page.
 * category_statistics: render the page which views the category statistics.
 * logout_user: to logout
 * load_categories: this view is used in the add item page to change the dropdown list of categories.
+
+# How to use
+* First you should create an account.
+* After creating an account, you can add categories from the category link in the nav bar.
+* You can add an item and specify its category, its value and write some notes.
+* There is a statistics link in the nav bar which shows statistics based on stored data.
