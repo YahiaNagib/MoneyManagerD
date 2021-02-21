@@ -4,6 +4,13 @@ body {
   margin-top: 5rem;
 }
 
+@media (max-width: 500px)  {
+  .navbar-brand {
+    font-size: 15px;
+  }
+}
+
+
 h1,
 h2,
 h3,
@@ -101,7 +108,23 @@ a.article-title:hover {
 
 /* categories */
 .category-heading {
-  margin-bottom: 70px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.category-heading .expense_btn {
+  margin-left: 5px;
+}
+
+.category-heading .income_btn {
+  margin-left: auto;
+}
+
+@media (max-width: 500px)  {
+  .category-heading {
+    flex-wrap: wrap;
+  }
 }
 
 .category-income-btn {
@@ -130,7 +153,23 @@ a.article-title:hover {
 /* statitics */
 
 .statistics-heading {
-  margin-bottom: 70px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.statistics-heading .expense_btn {
+  margin-left: 5px;
+}
+
+.statistics-heading .income_btn {
+  margin-left: auto;
+}
+
+@media (max-width: 500px)  {
+  .statistics-heading {
+    flex-wrap: wrap;
+  }
 }
 
 .statistics-income-btn {
@@ -165,3 +204,6 @@ a.article-title:hover {
 .clear-fix {
   clear: both;
 }
+
+
+

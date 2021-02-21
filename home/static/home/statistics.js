@@ -1,9 +1,11 @@
 
+window.onload = function() {
+
     const expense = 1;
     const income = 2;
-        
+    
     CallAjax(expense) // to call for expenses items from the server, 1 means expenses (default)
-
+    
     function CallAjax(categoryTypeId) {
         $.ajaxSetup({
             headers: { "X-CSRFToken": getCookie("csrftoken") }
@@ -15,29 +17,29 @@
             },
             'type': 'POST',
             success: function (items) {   // `items` is the return of the `load_categories` view function
-                var chart = new CanvasJS.Chart("chartContainer",
+            var chart = new CanvasJS.Chart("chartContainer",
+            {
+                backgroundColor: "transparent",
+                title: {
+                    text: ""
+                },
+                legend: {
+                    maxWidth: 350,
+                    itemWidth: 120,
+                    horizontalAlign: "right",
+                    verticalAlign: "center"
+                },
+                data: [
                     {
-                        backgroundColor: "transparent",
-                        title: {
-                            text: ""
-                        },
-                        legend: {
-                            maxWidth: 350,
-                            itemWidth: 120,
-                            horizontalAlign: "right",
-                            verticalAlign: "center"
-                        },
-                        data: [
-                            {
-                                type: "pie",
-                                showInLegend: true,
-                                legendText: "{indexLabel}",
-                                dataPoints: items,
-                            }
-                        ]
+                        type: "pie",
+                        showInLegend: true,
+                        legendText: "{indexLabel}",
+                        dataPoints: items,
+                    }
+                ]
                     });
-                chart.render();  // replace the contents of the category input with the data that came from the server
-            }
+                    chart.render();  // replace the contents of the category input with the data that came from the server
+                }
         });
     }
     // Copied from Django Documentaion
@@ -76,4 +78,5 @@
         $(".category_input").attr("name", "new_income")
     }
     )
-
+    
+}
