@@ -20,7 +20,7 @@ class AddItemForm(ModelForm):
         label="Category Type",
         widget=forms.Select(
             attrs={'class': 'category_type_list form-control form-control-lg mb-2'}),
-        initial=CategoryType.objects.get(pk=1)
+        initial=CategoryType.objects.filter(id=1).first()
     )
 
     class Meta:

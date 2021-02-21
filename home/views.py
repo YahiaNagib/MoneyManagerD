@@ -98,7 +98,7 @@ def categories(request):
             category = Category(category_type_id=2, name=request.POST.get("new_income"))
         category.save()
         messages.success(request, "Category has been added")
-        return redirect("home")
+        return redirect("categories")
     else:
         context = {
             'title': "Edit Categories",

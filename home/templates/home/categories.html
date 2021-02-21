@@ -9,6 +9,8 @@
     </div>
 
     <div class="content-section expense">
+
+        {% if expense_categories.all.count != 0 %}
         <table>
             {% for category in expense_categories %}
             <tr class="table-row" >
@@ -23,6 +25,7 @@
             </tr>
             {% endfor %}
         </table>
+        {% endif %}
     </div>
 
     <div class="content-section income" style="display: none;">
